@@ -3,6 +3,8 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 
+const require = src => fileURLToPath(new URL(src, import.meta.url))
+
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode, ssrBuild }) => {
     return {
@@ -20,6 +22,14 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
                     dir: './extension-dist',
                     entryFileNames: '[name].js'
                 }
+            },
+
+            watch: {
+                buildDelay: 1000,
+                // chokidar: '**/*',
+                clearScreen: false,
+                // exclude: ['node_modules/**'],
+                include: ['src/**', 'public/**']
             }
         },
 
@@ -30,13 +40,13 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
 
         resolve: {
             alias: {
-                '@': fileURLToPath(new URL('./src', import.meta.url)),
-                '@assets': fileURLToPath(new URL('./src/assets', import.meta.url)),
-                '@components': fileURLToPath(new URL('./src/components', import.meta.url)),
-                '@router': fileURLToPath(new URL('./src/router', import.meta.url)),
-                '@store': fileURLToPath(new URL('./src/store', import.meta.url)),
-                '@views': fileURLToPath(new URL('./src/views', import.meta.url)),
-                '@utils': fileURLToPath(new URL('./src/utils', import.meta.url))
+                '@': require('./src'),
+                '@assets': require('./src/assets'),
+                '@components': require('./src/components'),
+                '@router': require('./src/router'),
+                '@store': require('./src/store'),
+                '@views': require('./src/views'),
+                '@utils': require('./src/utils')
             }
         }
     }

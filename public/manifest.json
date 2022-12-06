@@ -1,42 +1,47 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "version": "1.0",
-    "name": "QQ群助手",
-    "description": "QQ群助手",
-    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-    "icons": [
+    "name": "QQ群管理助手",
+    "description": "QQ群管理助手",
+    "author": "kiccer<1072907338@qq.com>",
+    
+    "action": {
+        "default_icon": {
+            "16": "./favicon.ico",
+            "48": "./favicon.ico",
+            "128": "./favicon.ico"
+        },
+        "default_title": "test",
+        "default_popup": "./popup.html"
+    },
+
+    "icons": {
+        "16": "./favicon.ico",
+        "48": "./favicon.ico",
+        "128": "./favicon.ico"
+    },
+
+    "background": {
+        "service_worker": "./background.js"
+    },
+
+    "content_scripts": [
         {
-            "src": "images/icon.png",
-            "sizes": "128x128",
-            "type": "image/png"
+            "matches": [
+                "https://qun.qq.com/member.html"
+            ],
+
+            "css": [],
+
+            "js": [
+                "./content.js"
+            ]
         }
     ],
-    "browser_action": {
-        "default_title": "test",
-        "default_popup": "./popup.html",
-        "default_icon": {
-            "48": "./favicon.png"
-        }
-    },
-    "content_scripts": [{
-        "matches": ["<all_urls>"],
-        "css": [
-            "./css/content.css"
-        ],
-        "js": [
-            "./js/chunk-vendors.js",
-            "./js/content.js"
-        ]
-    }],
+
     "options_page": "options.html",
+
     "permissions": [
         "*://*/*"
-    ],
-    "background": {
-        "scripts": [
-            "./js/chunk-vendors.js",
-            "./js/background.js"
-        ],
-        "popup": "background.html"
-    }
+    ]
 }
